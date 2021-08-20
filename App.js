@@ -1,4 +1,3 @@
-import { createFactory } from 'react';
 import './App.css';
 import StopWatch from './StopWatch';
 
