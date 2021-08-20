@@ -1,0 +1,48 @@
+.start{
+    background-color:#18a69d;
+}
+.pause{
+    background-color:#fb657f;
+}
+.reset{
+    background-color:#4487d0;
+}
+.split{
+    background-color:  #f29e26;
+}
+
+button {
+    height: 94px;
+    width: 94px;
+    font-size: 20px;
+    border-radius: 50%;
+    margin: 0px 8px;
+    border: none;
+    color: white;
+  }
+
+.stopwatch-display{
+    font-size: 160px;
+}
+
+.split-item {
+    display: flex;
+    text-transform: capitalize;
+    color: var(--gray-color);
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 1.6rem;
+  }
+  
+  .split-item > div {
+    flex: 1 1 0;
+  }
+  
+  .split-item > :first-child {
+    flex: 0 0 8rem;
+    color: #696464;
+  }
+  
+  .split-item > :nth-child(2) {
+    flex: 3 1 0;
+  }
