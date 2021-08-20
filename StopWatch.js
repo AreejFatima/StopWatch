@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import DisplayWatch from "./DisplayWatch";
+import "./StopWatch.css";
+import SplitList from "./SplitList";
 
 const StopWatch = () => {
   const [hour, setHour] = useState(0);
@@ -23,10 +25,6 @@ const StopWatch = () => {
     setMin(0);
     setMsec(0);
     setSec(0);
-  };
-
-  const onSplit = () => {
-    console.log("splitt");
   };
 
   const formatTime = (time) => {
@@ -87,7 +85,18 @@ const StopWatch = () => {
       <button className="reset" onClick={onReset}>
         RESET
       </button>
+
+      {/* <button className="split" onClick={onReset}>
+        SPLIT
+      </button> */}
       <DisplayWatch
+        hour={hour}
+        min={min}
+        sec={sec}
+        msec={msec}
+        formatTime={formatTime}
+      />
+      <SplitList
         hour={hour}
         min={min}
         sec={sec}
