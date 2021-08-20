@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DisplayWatch from "./DisplayWatch";
 import "./StopWatch.css";
 import SplitList from "./SplitList";
@@ -9,6 +9,7 @@ const StopWatch = () => {
   const [sec, setSec] = useState(0);
   const [msec, setMsec] = useState(0);
   const [running, setRunning] = useState(false);
+  const childRef = useRef(); //child reference to call the child function
 
   const onStart = () => {
     if (!running) {
@@ -18,6 +19,8 @@ const StopWatch = () => {
 
   const onPause = () => {
     setRunning(false);
+    childRef.current.onSplit();
+
   };
 
   const onReset = () => {
@@ -33,6 +36,10 @@ const StopWatch = () => {
       formatted = "0" + formatted;
     }
     return formatted;
+  };
+
+  const handleSplit = () => {
+    childRef.current.onSplit();
   };
 
   useEffect(() => {
@@ -71,24 +78,24 @@ const StopWatch = () => {
 
   return (
     <div className="stopwatch">
-      <h2>Stopwatch</h2>
+      <h2 className="heading">Stopwatch</h2>
       {!running && (
         <button className="start" onClick={onStart}>
           START
         </button>
       )}
       {running && (
-        <button className="pause" onClick={onPause}>
+        <button className="pause" onClick={onPause} >
           PAUSE
         </button>
       )}
-      <button className="reset" onClick={onReset}>
+      <button className="reset" onClick={onReset} disabled={running}>
         RESET
       </button>
 
-      {/* <button className="split" onClick={onReset}>
+      <button className="split" onClick={handleSplit} disabled={!running}>
         SPLIT
-      </button> */}
+      </button>
       <DisplayWatch
         hour={hour}
         min={min}
@@ -97,6 +104,8 @@ const StopWatch = () => {
         formatTime={formatTime}
       />
       <SplitList
+      running={running}
+        ref={childRef}
         hour={hour}
         min={min}
         sec={sec}
@@ -108,3 +117,4 @@ const StopWatch = () => {
 };
 
 export default StopWatch;
+
