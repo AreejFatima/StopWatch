@@ -9,7 +9,7 @@ const StopWatch = () => {
   const [sec, setSec] = useState(0);
   const [msec, setMsec] = useState(0);
   const [running, setRunning] = useState(false);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([{ time: "", event: "" }]);
   const [event, setEvent] = useState("split");
 
   const onStart = () => {
@@ -39,23 +39,18 @@ const StopWatch = () => {
     )}:${formatTime(msec)}`;
   };
 
-  const onSplit = () => {
-    let time = formattedString();
-    setList((prevArray) => [...prevArray, time]);
-    setEvent("split");
+  const onSplit = (eventValue) => {
+    let tempTime = formattedString();
+    const tempObj = {
+      time: tempTime,
+      event: eventValue,
+    };
+    setList((prevArray) => [...prevArray, tempObj]);
   };
 
   const onPause = () => {
     setRunning(false);
-    onSplit();
-    setEvent("pause");
-  };
-  const splitValue = () => {
-    if (event == "pause") {
-      return "pause";
-    } else {
-      return "split";
-    }
+    onSplit("pause");
   };
 
   useEffect(() => {
@@ -109,15 +104,15 @@ const StopWatch = () => {
         RESET
       </button>
 
-      <button className="split" onClick={onSplit} disabled={!running}>
+      <button
+        className="split"
+        onClick={() => onSplit("split")}
+        disabled={!running}
+      >
         SPLIT
       </button>
       <DisplayWatch formattedString={formattedString} />
-      <SplitList
-        formattedString={formattedString}
-        list={list}
-        splitValue={splitValue}
-      />
+      <SplitList formattedString={formattedString} list={list} />
     </div>
   );
 };
