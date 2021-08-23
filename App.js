@@ -1,5 +1,5 @@
-import './App.css';
-import StopWatch from './StopWatch';
+import "./App.css";
+import StopWatch from "./StopWatch";
 
 function App() {
   return (
@@ -10,4 +10,3 @@ function App() {
 }
 
 export default App;
-

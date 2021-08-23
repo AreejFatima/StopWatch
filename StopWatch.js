@@ -9,18 +9,13 @@ const StopWatch = () => {
   const [sec, setSec] = useState(0);
   const [msec, setMsec] = useState(0);
   const [running, setRunning] = useState(false);
-  const childRef = useRef(); //child reference to call the child function
+  const [list, setList] = useState([]);
+  const [event, setEvent] = useState("split");
 
   const onStart = () => {
     if (!running) {
       setRunning(true);
     }
-  };
-
-  const onPause = () => {
-    setRunning(false);
-    childRef.current.onSplit();
-
   };
 
   const onReset = () => {
@@ -38,8 +33,29 @@ const StopWatch = () => {
     return formatted;
   };
 
-  const handleSplit = () => {
-    childRef.current.onSplit();
+  const formattedString = () => {
+    return `${formatTime(hour)}:${formatTime(min)}:${formatTime(
+      sec
+    )}:${formatTime(msec)}`;
+  };
+
+  const onSplit = () => {
+    let time = formattedString();
+    setList((prevArray) => [...prevArray, time]);
+    setEvent("split");
+  };
+
+  const onPause = () => {
+    setRunning(false);
+    onSplit();
+    setEvent("pause");
+  };
+  const splitValue = () => {
+    if (event == "pause") {
+      return "pause";
+    } else {
+      return "split";
+    }
   };
 
   useEffect(() => {
@@ -85,7 +101,7 @@ const StopWatch = () => {
         </button>
       )}
       {running && (
-        <button className="pause" onClick={onPause} >
+        <button className="pause" onClick={onPause}>
           PAUSE
         </button>
       )}
@@ -93,28 +109,17 @@ const StopWatch = () => {
         RESET
       </button>
 
-      <button className="split" onClick={handleSplit} disabled={!running}>
+      <button className="split" onClick={onSplit} disabled={!running}>
         SPLIT
       </button>
-      <DisplayWatch
-        hour={hour}
-        min={min}
-        sec={sec}
-        msec={msec}
-        formatTime={formatTime}
-      />
+      <DisplayWatch formattedString={formattedString} />
       <SplitList
-      running={running}
-        ref={childRef}
-        hour={hour}
-        min={min}
-        sec={sec}
-        msec={msec}
-        formatTime={formatTime}
+        formattedString={formattedString}
+        list={list}
+        splitValue={splitValue}
       />
     </div>
   );
 };
 
 export default StopWatch;
-
