@@ -10,7 +10,7 @@ const StopWatch = () => {
   const [msec, setMsec] = useState(0);
   const [running, setRunning] = useState(false);
   const [list, setList] = useState([{ time: "", event: "" }]);
-  const [event, setEvent] = useState("split");
+
 
   const onStart = () => {
     if (!running) {
